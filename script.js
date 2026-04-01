@@ -75,7 +75,7 @@ let isUpscroll = false;
 const difficultySettings = {
     easy: { noteSpeed: 3.5, spawnInterval: 1000, doubleNoteChance: 0.1, speedScale: 10000, spawnScale: 4000, minSpawnInterval: 600 },
     medium: { noteSpeed: 4, spawnInterval: 800, doubleNoteChance: 0.2, speedScale: 8000, spawnScale: 3000, minSpawnInterval: 450 },
-    hard: { noteSpeed: 5, spawnInterval: 600, doubleNoteChance: 0.3, speedScale: 6000, spawnScale: 2000, minSpawnInterval: 300 },
+    hard: { noteSpeed: 5, spawnInterval: 600, doubleNoteChance: 0.3, speedScale: 6000, spawnScale: 200, minSpawnInterval: 300 },
     extreme: { noteSpeed: 6.5, spawnInterval: 400, doubleNoteChance: 0.5, speedScale: 4000, spawnScale: 1000, minSpawnInterval: 200 }
 };
 
