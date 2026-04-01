@@ -73,10 +73,10 @@ let isUpscroll = false;
 
 // Difficulty parameters
 const difficultySettings = {
-    easy: { noteSpeed: 3.5, spawnInterval: 1000, doubleNoteChance: 0.1, speedScale: 10000, spawnScale: 1, minSpawnInterval: 600 },
-    medium: { noteSpeed: 4, spawnInterval: 800, doubleNoteChance: 0.2, speedScale: 8000, spawnScale: 1, minSpawnInterval: 450 },
-    hard: { noteSpeed: 5, spawnInterval: 600, doubleNoteChance: 0.3, speedScale: 6000, spawnScale: 1, minSpawnInterval: 300 },
-    extreme: { noteSpeed: 6.5, spawnInterval: 400, doubleNoteChance: 0.5, speedScale: 4000, spawnScale: 1, minSpawnInterval: 200 }
+    easy: { noteSpeed: 3.5, spawnInterval: 1000, doubleNoteChance: 0.1, speedScale: 10000, spawnScale: 4000, minSpawnInterval: 600 },
+    medium: { noteSpeed: 4, spawnInterval: 800, doubleNoteChance: 0.2, speedScale: 8000, spawnScale: 3000, minSpawnInterval: 450 },
+    hard: { noteSpeed: 5, spawnInterval: 600, doubleNoteChance: 0.3, speedScale: 6000, spawnScale: 2000, minSpawnInterval: 300 },
+    extreme: { noteSpeed: 6.5, spawnInterval: 400, doubleNoteChance: 0.5, speedScale: 4000, spawnScale: 1000, minSpawnInterval: 200 }
 };
 
 let currentNoteSpeed = 4;
@@ -153,11 +153,20 @@ function spawnNoteInLane(laneIndex) {
 
 function updateDifficulty() {
     const settings = difficultySettings[selectedDifficulty];
-    const speedMultiplier = 1 + (score / settings.speedScale); 
+    
+    // Escala de velocidade baseada na pontuação (Limitada a 4x)
+    let speedMultiplier = 1 + (score / settings.speedScale); 
+    if (speedMultiplier > 4) speedMultiplier = 4;
+    
     currentNoteSpeed = settings.noteSpeed * speedMultiplier;
+    
+    // Escala de spawn baseada na pontuação
     const intervalReduction = (score / settings.spawnScale); 
     currentSpawnInterval = Math.max(settings.minSpawnInterval, settings.spawnInterval - intervalReduction);
-    if (speedDisplay) speedDisplay.textContent = speedMultiplier.toFixed(1);
+
+    if (speedDisplay) {
+        speedDisplay.textContent = speedMultiplier.toFixed(1);
+    }
 }
 
 function showFeedback(type) {
