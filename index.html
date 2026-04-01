@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senai Hero</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Tela de Seleção de Música -->
+        <div id="song-selection-menu" class="menu-container">
+            <h1>Senai Hero</h1>
+            <p>Selecione a Música:</p>
+            <div class="song-options">
+                <button class="song-btn" data-song="alone.mp3">Alone - Marshmello</button>
+                <button class="song-btn" data-song="jaquemeensinou.mpeg">Já que me ensinou a beber - Os barões da pisadinha</button>
+            </div>
+            <button id="open-settings-btn-main" class="secondary-btn">Configurar Teclas</button>
+        </div>
+
+        <!-- Tela de Seleção de Dificuldade -->
+        <div id="start-menu" class="menu-container hidden">
+            <h1>Senai Hero</h1>
+            <p>Música: <span id="selected-song-name">-</span></p>
+            <p>Selecione a Dificuldade:</p>
+            <div class="difficulty-options">
+                <button class="diff-btn" data-difficulty="easy">Easy</button>
+                <button class="diff-btn" data-difficulty="medium">Medium</button>
+                <button class="diff-btn" data-difficulty="hard">Hard</button>
+                <button class="diff-btn" data-difficulty="extreme">Extreme</button>
+            </div>
+            <button id="back-to-songs-btn" class="secondary-btn">Voltar para Músicas</button>
+            <div id="controls-instruction" class="controls-info">
+                Use as teclas <strong>D, F, J, K</strong> para tocar!
+            </div>
+        </div>
+
+        <!-- Modal de Pausa -->
+        <div id="pause-modal" class="modal-container hidden">
+            <div class="modal-content">
+                <h2>JOGO PAUSADO</h2>
+                <div class="pause-options">
+                    <button id="resume-btn" class="diff-btn">Continuar</button>
+                    <button id="restart-pause-btn" class="diff-btn">Reiniciar Música</button>
+                    <button id="menu-pause-btn" class="diff-btn">Sair para o Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings-modal" class="modal-container hidden">
+            <div class="modal-content">
+                <h2>Configurar Teclas</h2>
+                <p>Clique no botão e pressione a nova tecla:</p>
+                <div class="key-settings">
+                    <div class="key-option">
+                        <span>Trilha 1:</span>
+                        <button class="key-config-btn" data-lane="0">D</button>
+                    </div>
+                    <div class="key-option">
+                        <span>Trilha 2:</span>
+                        <button class="key-config-btn" data-lane="1">F</button>
+                    </div>
+                    <div class="key-option">
+                        <span>Trilha 3:</span>
+                        <button class="key-config-btn" data-lane="2">J</button>
+                    </div>
+                    <div class="key-option">
+                        <span>Trilha 4:</span>
+                        <button class="key-config-btn" data-lane="3">K</button>
+                    </div>
+                </div>
+                <div class="setting-option">
+                    <span>Inverter Direção (Upscroll):</span>
+                    <label class="switch">
+                        <input type="checkbox" id="upscroll-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button id="close-settings-btn">Salvar e Voltar</button>
+            </div>
+        </div>
+
+        <div id="game-ui" class="game-ui hidden">
+            <div class="score-container">
+                <p>Pontuação: <span id="score">0</span></p>
+                <p>Combo: <span id="combo">0</span></p>
+                <p>Velocidade: <span id="speed-display">1.0</span>x</p>
+            </div>
+
+            <div class="song-progress-container">
+                <div id="song-progress-bar" class="song-progress-bar"></div>
+            </div>
+
+            <div class="fretboard-container">
+                <div class="fretboard">
+                    <div id="feedback-text" class="feedback-text"></div>
+                    <div class="lane" id="lane-0" data-key="D">
+                        <div class="key-indicator">D</div>
+                    </div>
+                    <div class="lane" id="lane-1" data-key="F">
+                        <div class="key-indicator">F</div>
+                    </div>
+                    <div class="lane" id="lane-2" data-key="J">
+                        <div class="key-indicator">J</div>
+                    </div>
+                    <div class="lane" id="lane-3" data-key="K">
+                        <div class="key-indicator">K</div>
+                    </div>
+                    <div class="strike-line"></div>
+                </div>
+
+                <div class="health-container">
+                    <div id="health-bar" class="health-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over" class="game-over hidden">
+            <h1>FIM DE JOGO</h1>
+            <p>Sua pontuação final: <span id="final-score">0</span></p>
+            <button id="back-to-menu-btn">Menu Principal</button>
+            <button id="restart-btn">Tentar Novamente</button>
+        </div>
+
+        <!-- Tela de Vitória -->
+        <div id="victory-screen" class="game-over hidden victory">
+            <h1>VOCÊ VENCEU!</h1>
+            <div class="victory-stats">
+                <p>Pontuação Total: <span id="victory-score">0</span></p>
+                <div class="stats-grid">
+                    <div class="stat-item perfect">Perfect: <span id="stat-perfect">0</span></div>
+                    <div class="stat-item good">Good: <span id="stat-good">0</span></div>
+                    <div class="stat-item bad">Bad: <span id="stat-bad">0</span></div>
+                    <div class="stat-item miss">Miss: <span id="stat-miss">0</span></div>
+                </div>
+                <p>Combo Máximo: <span id="stat-max-combo">0</span></p>
+            </div>
+            <button id="victory-menu-btn">Menu Principal</button>
+            <button id="victory-restart-btn">Jogar Novamente</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
